@@ -2,7 +2,10 @@ const inquirer = require('inquirer');
 const fs = require('fs');
 
 const {Triangle, Square} = require('./lib/shapes')
-inquirer
+
+
+function promptUser(){
+  inquirer
   .prompt([
     {
       type: 'list',
@@ -22,6 +25,16 @@ inquirer
       name: 'text',
     },
   ])
-  .then((data) => {
-      data ? console.log(data) : console.log('Failed')
+  .then((answer) => {
+    if (answer.text.length >3){
+      console.log("3 Characters max");
+      promptUser();
+    }else{
+      console.log(answer);
+      fs.writeFile('logo.svg',answer);
+    }
   });
+
+}
+
+promptUser();
